@@ -7,8 +7,8 @@ function Require(modules, modulePath) {
         var resolved = resolve(path);
         
         if(requiringModules[resolved] && console && console.warn) {
-            console.error('node2browser error: circular dependency detected.');
-            console.error('module ' + modulePath + ' is requiring ' + resolved + ' and vice versa.');
+            console.error('node2browser error: circular dependency detected.\n'
+                + 'module ' + modulePath + ' is requiring ' + resolved + ' and vice versa.');
 
             return undefined;
         }

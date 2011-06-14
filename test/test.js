@@ -1,0 +1,12 @@
+console.log('======== browserResolve =========================================');
+require('./browserResolve/test');
+console.log('======== getLookUpPaths =========================================');
+require('./getLookUpPaths/test');
+console.log('======== nodeResolve ============================================');
+require('./nodeResolve/test');
+console.log('======== normalizePath ==========================================');
+require('./normalizePath/test');
+console.log('======== setup ==================================================');
+require('./setup/test');
+console.log('======== translate ==============================================');
+require('./translate/test');

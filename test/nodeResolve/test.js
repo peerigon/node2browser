@@ -25,6 +25,11 @@ assert.equal(
     __dirname + '/node_modules/someModule/main.js'
 );
 
+assert.equal(
+    nodeResolve(currentModuleDir, 'someModule/package.json'),
+    __dirname + '/node_modules/someModule/main.js'
+);
+
 ///////////////////////////////////////////////////////////////////////////////////////
 
 assert.equal(
