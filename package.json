@@ -5,7 +5,7 @@
   "homepage": "http://github.com/jhnns/node2browser",
   "repository": "git://github.com/jhnns/node2browser.git",
   "author": "Johannes Ewald <johannes.ewald@gmx.de>",
-  "main": "./lib/main.js",
+  "main": "./lib/index.js",
   "keywords": ["browser", "module", "node", "client", "server", "translation", "commonJS"],
   "dependencies": {},
   "engines": {

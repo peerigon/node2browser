@@ -1,3 +1,13 @@
-modules['<%= modulePath %>'] = (function(){}
-var module = 
-)();
+modules['<%= fileName %>'] = function(require){
+    var module = {exports:{},filename:'<%= fileName %>'},
+        __filename = '<%= fileName %>',
+        __dirname = '<%= dirName %>',
+        exports = module.exports,
+        Require = undefined, modules = undefined, requiringModules = undefined, initializedModules = undefined, initModule = undefined;
+
+// MODULE <%= fileName %> START /////////////////////////////
+<%= moduleContent %>
+// MODULE <%= fileName %> END ///////////////////////////////
+
+    return module.exports;
+};

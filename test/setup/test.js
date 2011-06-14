@@ -1,0 +1,8 @@
+var assert = require('assert');
+
+///////////////////////////////////////////////////////////////////////////////////////
+
+assert.doesNotThrow(function() {
+    var setup = require('../../lib/setup');
+})
+    

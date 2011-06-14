@@ -1,0 +1,14 @@
+var global = {},
+    requiringModules = {},
+    initializedModules = {},
+    modules = {};
+
+function initModule(modulePath) {
+    if(typeof modules[modulePath] === 'function'
+        && initializedModules[modulePath] === undefined) {
+        modules[modulePath] = modules[modulePath](new Require(modules, modulePath));
+        initializedModules[modulePath] = true;
+    }
+}   
+
+<%= requireFunc %>

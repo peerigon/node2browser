@@ -1,0 +1,4 @@
+{
+    "name": "folder2",
+    "main": "../folder1/main.js"
+}
