@@ -1,12 +1,12 @@
-console.log('======== browserResolve =========================================');
-require('./browserResolve/test');
-console.log('======== getLookUpPaths =========================================');
-require('./getLookUpPaths/test');
-console.log('======== nodeResolve ============================================');
-require('./nodeResolve/test');
-console.log('======== normalizePath ==========================================');
-require('./normalizePath/test');
-console.log('======== setup ==================================================');
-require('./setup/test');
-console.log('======== translate ==============================================');
-require('./translate/test');
+var reporter = require('nodeunit').reporters.default;
+
+reporter.run(
+    [
+        'normalizePath/normalizePath.js',
+        'getLookUpPaths/getLookUpPaths.js',
+        'Resolve/Resolve.js',
+        'nodeResolve/nodeResolve.js',
+        'setup/setup.js',
+        'translate/translate.js'
+    ]
+);

@@ -3,7 +3,7 @@ modules['<%= fileName %>'] = function(require){
         __filename = '<%= fileName %>',
         __dirname = '<%= dirName %>',
         exports = module.exports,
-        Require = undefined, modules = undefined, requiringModules = undefined, initializedModules = undefined, initModule = undefined;
+        modules;    // overwrites function scope var
 
 // MODULE <%= fileName %> START /////////////////////////////
 <%= moduleContent %>
