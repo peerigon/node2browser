@@ -7,6 +7,7 @@ reporter.run(
         'Resolve/Resolve.js',
         'nodeResolve/nodeResolve.js',
         'setup/setup.js',
+        'getDependencies/getDependencies.js',
         'translate/translate.js'
     ]
 );

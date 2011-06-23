@@ -1,4 +1,4 @@
 {
     "name": "folder2",
-    "main": "../folder1/main.js"
+    "main": "./otherModule2.js"
 }

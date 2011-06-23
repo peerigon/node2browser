@@ -10,9 +10,28 @@ var testCase = require('nodeunit').testCase,
 
 var sandbox,
     consoleMsg,
-    module1Path = require.resolve('./folder1/module1.js'),
-    module2Path = require.resolve('./folder1/module2.js'),
-    circular1Path = require.resolve('./folder1/circular1.js');
+    module1Path = __dirname + '/folder1/module1.js',
+    module2Path = __dirname + '/folder1/module2.js',
+    circular1Path = __dirname + '/folder1/circular1.js',
+    folder1 = [
+        module1Path,
+        module2Path,
+        circular1Path,
+        __dirname + '/folder1/circular2.js',
+        __dirname + '/folder1/main.js'
+    ],
+    otherModulePath = __dirname + '/folder2/otherModule1.js',
+    folder3Index = __dirname + '/folder3/index.js',
+    folder4 = [
+        __dirname + '/node_modules/folder4/module1.js',
+        __dirname + '/node_modules/folder4/module2.js'
+    ],
+    browserModules = [
+        __dirname + '/browser/node_modules/folder1/module1.js',
+        __dirname + '/browser/node_modules/folder1/package.json',
+        __dirname + '/browser/node_modules/folder2/module2.js',
+        __dirname + '/browser/node_modules/test.js'
+    ];
 
 function run(src, modulePath) {
     src = setup(src, modulePath);
@@ -74,7 +93,7 @@ module.exports = testCase({
     unknownInitModule: function(test) {
         test.expect(1);
         translate(
-            __dirname + '/folder1',
+            folder1,
             undefined,
             function result(err, src) {
                 if(err) {throw err;}
@@ -87,11 +106,11 @@ module.exports = testCase({
     circularDependency: function(test) {
         test.expect(1);
         translate(
-            __dirname + '/folder1',
+            folder1,
             undefined,
             function result(err, src) {
                 if(err) {throw err;}
-                run(src, __dirname + '/folder1/circular1.js');
+                run(src, circular1Path);
                 test.equal(
                     consoleMsg,
                     'node2browser error: circular dependency detected.\n'
@@ -103,17 +122,18 @@ module.exports = testCase({
         );
     },
     packageJSON: function(test) {
-        test.expect(1);
+        test.expect(3);
         translate(
-            __dirname + '/folder2',
+            otherModulePath,
             undefined,
             function result(err, src) {
-                var main = __dirname + '/folder1/main.js';
-
                 if(err) {throw err;}
                 run(src, __dirname + '/folder2/package.json');
-                main = sandbox.modules[main];
-                test.equal(main.module1(), 2);
+                // if package.json has been initialized, then otherModule2,
+                // otherModule3 and otherModule4 must be objects
+                test.equal(typeof sandbox.modules[__dirname + '/folder2/otherModule2.js'], 'object');
+                test.equal(typeof sandbox.modules[__dirname + '/folder2/otherModule3.js'], 'object');
+                test.equal(typeof sandbox.modules[__dirname + '/folder2/otherModule4.js'], 'object');
                 test.done();
             }
         );
@@ -139,7 +159,7 @@ module.exports = testCase({
         }
 
         test.expect(2);
-        translate(__dirname + '/node_modules/folder4', pathModifier, finished);
+        translate(folder4, pathModifier, finished);
     },
     writingBrowserTest: function(test) {
         var nodeUnitPath = pathUtil.dirname(require.resolve('nodeunit')) + '/examples/browser/nodeunit.js',
@@ -164,6 +184,6 @@ module.exports = testCase({
             }
         }
 
-        translate(__dirname + '/browser/node_modules', pathModifier, finished);
+        translate(browserModules, pathModifier, finished);
     }
 });
