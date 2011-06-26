@@ -59,14 +59,15 @@ module.exports = testCase({
         finished();
     },
     simpleModule: function(test) {
-        test.expect(1);
+        test.expect(2);
         translate(
             module1Path,
             undefined,
-            function result(err, src) {
+            function result(err, src, files) {
                 var module1;
 
                 if(err) {throw err;}
+                test.deepEqual(files, [module1Path]);
                 run(src, module1Path);
                 module1 = sandbox.modules[module1Path];
                 test.equal(module1(), 2);
@@ -75,14 +76,15 @@ module.exports = testCase({
         );
     },
     singleRequirement: function(test) {
-        test.expect(1);
+        test.expect(2);
         translate(
             module2Path,
             undefined,
-            function result(err, src) {
+            function result(err, src, files) {
                 var module2;
 
                 if(err) {throw err;}
+                test.deepEqual(files.sort(), [module1Path, module2Path].sort());
                 run(src, module2Path);
                 module2 = sandbox.modules[module2Path];
                 test.equal(module2(), 3);
@@ -122,13 +124,23 @@ module.exports = testCase({
         );
     },
     packageJSON: function(test) {
-        test.expect(3);
+        test.expect(4);
         translate(
             otherModulePath,
             undefined,
-            function result(err, src) {
+            function result(err, src, files) {
                 if(err) {throw err;}
                 run(src, __dirname + '/folder2/package.json');
+                test.deepEqual(
+                    files.sort(),
+                    [
+                        __dirname + '/folder2/package.json',
+                        __dirname + '/folder2/otherModule1.js',
+                        __dirname + '/folder2/otherModule2.js',
+                        __dirname + '/folder2/otherModule3.js',
+                        __dirname + '/folder2/otherModule4.js'
+                    ].sort()
+                );
                 // if package.json has been initialized, then otherModule2,
                 // otherModule3 and otherModule4 must be objects
                 test.equal(typeof sandbox.modules[__dirname + '/folder2/otherModule2.js'], 'object');
@@ -140,7 +152,7 @@ module.exports = testCase({
     },
     withPathModifier: function(test) {
         function finished(err ,src) {
-            var module1 = '/node_modules/folder4/module1.js';
+            var module1 = 'node_modules/folder4/module1.js';
 
             if(err) {throw err;}
             run(src, module1);
@@ -151,10 +163,10 @@ module.exports = testCase({
         }
 
         function pathModifier(path) {
-            if(path.charAt(0) === '.') {
-                return path;
+            if (/.*node_modules\//gi.test(path)) {
+                return 'node_modules/' + path.replace(/.*node_modules\//gi, '');
             } else {
-                return '/node_modules/' + path.replace(/.*node_modules\//gi, '');
+                return path;
             }
         }
 
@@ -166,7 +178,7 @@ module.exports = testCase({
             nodeUnit = fs.readFileSync(nodeUnitPath, 'utf8');
 
         function finished(err, src) {
-            var testModule = '/node_modules/test.js';
+            var testModule = 'node_modules/test.js';
 
             if(err) {throw err;}
             run(src, testModule);
@@ -177,10 +189,10 @@ module.exports = testCase({
         }
 
         function pathModifier(path) {
-            if(path.charAt(0) === '.') {
-                return path;
+            if (/.*node_modules\//gi.test(path)) {
+                return 'node_modules/' + path.replace(/.*node_modules\//gi, '');
             } else {
-                return '/node_modules/' + path.replace(/.*node_modules\//gi, '');
+                return path;
             }
         }
 
