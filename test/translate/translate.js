@@ -173,6 +173,20 @@ module.exports = testCase({
         test.expect(2);
         translate(folder4, pathModifier, finished);
     },
+    withFalsyPathModifier: function(test) {
+        function finished(err, src) {
+            if(err) {throw err;}
+            test.strictEqual(src, '');
+            test.done();
+        }
+
+        function pathModifier(path) {
+            return false;
+        }
+
+        test.expect(1);
+        translate(folder4, pathModifier, finished);
+    },
     writingBrowserTest: function(test) {
         var nodeUnitPath = pathUtil.dirname(require.resolve('nodeunit')) + '/examples/browser/nodeunit.js',
             nodeUnit = fs.readFileSync(nodeUnitPath, 'utf8');

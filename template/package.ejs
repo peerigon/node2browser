@@ -1,1 +1,1 @@
-window.modules['<%= fileName %>'] = <%= packageContent %>;
+window.modules['<%= fileName %>'] = window.modules['<%= fileName %>'] || <%= packageContent %>;
