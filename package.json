@@ -9,6 +9,6 @@
   "keywords": ["browser", "module", "node", "client", "server", "translation", "commonJS"],
   "dependencies": {},
   "engines": {
-    "node": "0.4.x"
+    "node": "0.6.x"
   }
 }
