@@ -7,7 +7,6 @@
   "author": "Johannes Ewald <johannes.ewald@gmx.de>",
   "main": "./lib/index.js",
   "keywords": ["browser", "module", "node", "client", "server", "translation", "commonJS"],
-  "dependencies": {},
   "engines": {
     "node": "0.6.x"
   }
