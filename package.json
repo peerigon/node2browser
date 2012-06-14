@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "homepage": "http://github.com/pandaa/node2browser",
   "repository": "git://github.com/pandaa/node2browser.git",
-  "author": "Johannes Ewald <johannes.ewald@gmx.de>",
+  "author": "Johannes Ewald",
   "main": "./lib/index.js",
   "keywords": ["browser", "module", "node", "client", "server", "translation", "commonJS"],
   "engines": {
